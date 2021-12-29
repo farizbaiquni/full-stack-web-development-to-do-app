@@ -1,0 +1,22 @@
+:root {
+  --background-color: #a52a2a;
+}
+
+body {
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  margin: 0px;
+  min-height: 100vh;
+}
+
+main {
+  margin-top: 70px;
+  background-color: cornsilk;
+  padding: 20px 10px;
+  border-radius: 10px;
+}
+
+h1 {
+  text-align: center;
+}

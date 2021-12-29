@@ -7,14 +7,36 @@
   <title>{title}</title>
 </svelte:head>
 
-<h1>{title}</h1>
+<div class="todos">
+  <h1>{title}</h1>
+  <form action="" method="">
+    <input
+      type="text"
+      aria-label="Add a todo"
+      placeholder="+ Type to add a todo"
+    />
+  </form>
 
-<form action="" method="">
-  <input
-    type="text"
-    aria-label="Add a todo"
-    placeholder="+ Type to add a todo"
-  />
-</form>
+  <TodoList />
+</div>
 
-<TodoList />
+<style>
+  .todos {
+    width: 42rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  form {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  input {
+    width: 80%;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+  }
+</style>
