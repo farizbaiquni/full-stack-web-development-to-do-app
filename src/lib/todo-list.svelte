@@ -1,3 +1,7 @@
+<script type="ts">
+  export let todo: Todo;
+</script>
+
 <div class="todo-list">
   <form action="" method="">
     <input type="hidden" name="done" value="" />
@@ -7,7 +11,7 @@
   </form>
 
   <form action="" method="" id="text">
-    <input type="text" />
+    <input type="text" value={todo.todo} />
     <button aria-label="Save" class="save">
       <i class="fa fa-2x fa-floppy-o" aria-hidden="true" />
     </button>
