@@ -11,3 +11,9 @@ export const get = (request: Request) => {
 export const del: RequestHandler<{}, FormData> = (request) => {
     return api(request)
 }
+
+export const patch: RequestHandler<{}, FormData> = (request) => {
+    return api(request, {
+        todo: request.body.get("todo"),
+    })
+}

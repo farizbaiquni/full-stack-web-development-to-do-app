@@ -36,6 +36,7 @@
       placeholder="+ Type to add a todo"
       autocomplete="off"
     />
+    <input type="submit" hidden />
   </form>
 
   {#each todos as todo}

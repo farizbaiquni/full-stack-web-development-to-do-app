@@ -10,9 +10,9 @@
     </button>
   </form>
 
-  <form action="" method="" id="text">
-    <input type="text" value={todo.todo} />
-    <button aria-label="Save" class="save">
+  <form action="/todos/{todo.uid}.json?_method=patch" method="post" id="text">
+    <input type="text" value={todo.todo} name="todo" />
+    <button aria-label="Save" class="save" type="submit">
       <i class="fa fa-2x fa-floppy-o" aria-hidden="true" />
     </button>
   </form>
