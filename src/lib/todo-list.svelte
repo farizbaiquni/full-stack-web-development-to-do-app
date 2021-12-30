@@ -17,9 +17,8 @@
     </button>
   </form>
 
-  <form action="" method="">
-    <input type="hidden" name="done" value="" />
-    <button aria-label="Delete" class="delete">
+  <form action="/todos/{todo.uid}.json?_method=delete" method="post">
+    <button aria-label="Delete" class="delete" type="submit">
       <i class="fa fa-2x fa-trash" aria-hidden="true" />
     </button>
   </form>

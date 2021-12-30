@@ -34,6 +34,7 @@
       name="todo"
       aria-label="Add a todo"
       placeholder="+ Type to add a todo"
+      autocomplete="off"
     />
   </form>
 
