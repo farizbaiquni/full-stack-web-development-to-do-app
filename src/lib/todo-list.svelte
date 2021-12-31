@@ -2,10 +2,13 @@
   export let todo: Todo;
 </script>
 
-<div class="todo-list">
-  <form action="" method="">
-    <input type="hidden" name="done" value="" />
-    <button aria-label="Mark done / not done" class="toggle">
+<div class="todo-list" class:done={todo.done}>
+  <form action="/todos/{todo.uid}.json?_method=patch" method="post">
+    <input type="hidden" name="done" value={todo.done ? "" : "true"} />
+    <button
+      aria-label="Mark as {todo.done ? 'not done' : 'done'}"
+      class="toggle"
+    >
       <i class="fa fa-2x fa-check" aria-hidden="true" />
     </button>
   </form>
@@ -25,6 +28,27 @@
 </div>
 
 <style>
+  .done {
+    opacity: 0.6;
+  }
+
+  .done .toggle i {
+    opacity: 1;
+  }
+
+  .done .save {
+    display: none;
+  }
+
+  .toggle {
+    border-radius: 100%;
+    margin-right: 5px;
+  }
+
+  .toggle i {
+    opacity: 0;
+  }
+
   .todo-list {
     display: flex;
     margin-top: 20px;
