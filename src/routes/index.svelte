@@ -18,8 +18,14 @@
 
 <script lang="ts">
   import TodoList from "$lib/todo-list.svelte";
+  import { enhance } from "$lib/actions/form";
   const title = "Todos";
   export let todos: Todo[];
+
+  const addedNewTodo = async (respone: Response) => {
+    const data = await respone.json();
+    todos = [...todos, data];
+  };
 </script>
 
 <svelte:head>
@@ -28,7 +34,11 @@
 
 <div class="todos">
   <h1>{title}</h1>
-  <form action="/todos.json" method="post">
+  <form
+    action="/todos.json"
+    method="post"
+    use:enhance={{ result: addedNewTodo }}
+  >
     <input
       type="text"
       name="todo"

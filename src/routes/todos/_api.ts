@@ -6,29 +6,20 @@ export const api = (request, data?: Record<string, any>) => {
     
     switch(request.method.toUpperCase()){
         case "GET":
-            return {
-                status: 200,
-                body: todos
-            }
+            body = todos
+            status = 200
+            break
 
         case "POST":
             todos.push(data as Todo)
-
-            return {
-                status: 303,
-                headers: {
-                    location: "/"
-                }
-            }
+            body = data
+            status = 200
+            break
 
         case "DELETE":
             todos = todos.filter(todo => todo.uid !== request.params.uid)
-            return {
-                status: 303,
-                headers: {
-                    location: "/"
-                }
-            }
+            status = 200
+            break
 
         case "PATCH":
             todos = todos.map( todo => {
@@ -38,18 +29,25 @@ export const api = (request, data?: Record<string, any>) => {
                 }
                 return todo
             })
-            return {
-                status: 303,
-                headers: {
-                    location: "/"
-                }
-            }
+            break
+            
 
         default:
-            return {
-                status,
-                body
-            }
+            break
 
+    }
+
+    if(request.method.toUpperCase() !== "GET" && request.headers.accept !== "application/json"){
+        return {
+            headers: {
+                status: 303,
+                location: "/"
+            }
+        }
+    }
+
+    return {
+        status,
+        body
     }
 }
