@@ -9,9 +9,9 @@
       };
     }
 
-    const { message } = await result.json();
+    const { errorMessage } = await result.json();
     return {
-      error: new Error(message),
+      error: new Error(errorMessage),
     };
   };
 </script>
@@ -22,9 +22,18 @@
   const title = "Todos";
   export let todos: Todo[];
 
-  const addedNewTodo = async (respone: Response) => {
+  const addedNewTodo = async (respone: Response, form: HTMLFormElement) => {
     const data = await respone.json();
     todos = [...todos, data];
+    form.reset();
+  };
+  const updateTodoStatus = async (res: Response) => {
+    const data = await res.json();
+    todos = data;
+  };
+  const deleteTodo = async (res: Response) => {
+    const data = await res.json();
+    todos = data;
   };
 </script>
 
@@ -50,7 +59,7 @@
   </form>
 
   {#each todos as todo}
-    <TodoList {todo} />
+    <TodoList {todo} {updateTodoStatus} {deleteTodo} />
   {/each}
 </div>
 
@@ -60,6 +69,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 10px;
   }
   form {
     display: flex;

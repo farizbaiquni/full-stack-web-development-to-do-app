@@ -15,7 +15,7 @@ export const enhance = (form: HTMLFormElement, {result}) => {
             })
 
             if(res.ok){
-                result(res)
+                result(res, form)
             }
 
         } catch (error) {

@@ -1,9 +1,16 @@
 <script type="ts">
+  import { enhance } from "./actions/form";
+  export let updateTodoStatus;
+  export let deleteTodo;
   export let todo: Todo;
 </script>
 
 <div class="todo-list" class:done={todo.done}>
-  <form action="/todos/{todo.uid}.json?_method=patch" method="post">
+  <form
+    action="/todos/{todo.uid}.json?_method=patch"
+    method="post"
+    use:enhance={{ result: updateTodoStatus }}
+  >
     <input type="hidden" name="done" value={todo.done ? "" : "true"} />
     <button
       aria-label="Mark as {todo.done ? 'not done' : 'done'}"
@@ -20,7 +27,11 @@
     </button>
   </form>
 
-  <form action="/todos/{todo.uid}.json?_method=delete" method="post">
+  <form
+    action="/todos/{todo.uid}.json?_method=delete"
+    method="post"
+    use:enhance={{ result: deleteTodo }}
+  >
     <button aria-label="Delete" class="delete" type="submit">
       <i class="fa fa-2x fa-trash" aria-hidden="true" />
     </button>
@@ -40,11 +51,6 @@
     display: none;
   }
 
-  .toggle {
-    border-radius: 100%;
-    margin-right: 5px;
-  }
-
   .toggle i {
     opacity: 0;
   }
@@ -62,10 +68,15 @@
 
   .todo-list #text input {
     flex: 1;
+    padding: 0 5px;
   }
 
   .todo-list .toggle {
     opacity: 0.5;
+    width: 80%;
+    height: 80%;
+    border-radius: 100%;
+    margin-right: 5px;
   }
 
   .todo-list .save {

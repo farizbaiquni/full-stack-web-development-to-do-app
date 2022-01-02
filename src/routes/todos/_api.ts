@@ -1,6 +1,7 @@
 let todos: Todo[] = []
 
 export const api = (request, data?: Record<string, any>) => {
+    
     let status = 500
     let body = {}
     
@@ -19,6 +20,7 @@ export const api = (request, data?: Record<string, any>) => {
         case "DELETE":
             todos = todos.filter(todo => todo.uid !== request.params.uid)
             status = 200
+            body = todos
             break
 
         case "PATCH":
@@ -29,6 +31,8 @@ export const api = (request, data?: Record<string, any>) => {
                 }
                 return todo
             })
+            status = 200
+            body = todos
             break
             
 
@@ -39,8 +43,8 @@ export const api = (request, data?: Record<string, any>) => {
 
     if(request.method.toUpperCase() !== "GET" && request.headers.accept !== "application/json"){
         return {
+            status: 303,
             headers: {
-                status: 303,
                 location: "/"
             }
         }
