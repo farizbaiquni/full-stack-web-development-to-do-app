@@ -25,9 +25,10 @@
   const addedNewTodo = async (respone: Response, form: HTMLFormElement) => {
     const data = await respone.json();
     todos = [...todos, data];
+    console.log(todos);
     form.reset();
   };
-  const updateTodoStatus = async (res: Response) => {
+  const updateTodo = async (res: Response) => {
     const data = await res.json();
     todos = data;
   };
@@ -59,7 +60,7 @@
   </form>
 
   {#each todos as todo}
-    <TodoList {todo} {updateTodoStatus} {deleteTodo} />
+    <TodoList {todo} {updateTodo} {deleteTodo} />
   {/each}
 </div>
 

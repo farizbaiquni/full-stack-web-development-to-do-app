@@ -1,38 +1,69 @@
+import prismaClient from "$lib/prisma"
+
+const prisma = new prismaClient()
+
 let todos: Todo[] = []
 
-export const api = (request, data?: Record<string, any>) => {
+export const api = async (request, todoData?: Record<string, any>) => {
     
     let status = 500
     let body = {}
     
     switch(request.method.toUpperCase()){
         case "GET":
-            body = todos
+            body = await prisma.todo.findMany({
+                orderBy: {
+                    created_at: "asc"
+                }
+            })
             status = 200
             break
 
         case "POST":
-            todos.push(data as Todo)
-            body = data
+            body = await prisma.todo.create({
+                data: {
+                    created_at: todoData.created_at as Date,
+                    todo: todoData.todo as string,
+                    done: todoData.done as boolean,
+                }
+            })
             status = 200
             break
 
         case "DELETE":
-            todos = todos.filter(todo => todo.uid !== request.params.uid)
+            await prisma.todo.delete({
+                where: {
+                    uid: request.params.uid
+                }
+            })
             status = 200
-            body = todos
+            body = await prisma.todo.findMany({
+                orderBy: {
+                    created_at: "asc"
+                }
+            })
+            status = 200
             break
 
         case "PATCH":
-            todos = todos.map( todo => {
-                if(todo.uid === request.params.uid){
-                    if(data.todo) todo.todo = data.todo as string
-                    else todo.done = data.done as boolean
+            body = await prisma.todo.update({
+                where: {
+                    uid: request.params.uid
+                },
+
+                data: {
+                    todo: todoData.todo,
+                    done: todoData.done,
                 }
-                return todo
+
+            })
+            body = await prisma.todo.findMany({
+                orderBy: {
+                    created_at: "asc"
+                }
             })
             status = 200
-            body = todos
+
             break
             
 
@@ -41,6 +72,7 @@ export const api = (request, data?: Record<string, any>) => {
 
     }
 
+    //This one will be used if not using ajax fetch (js disabled)
     if(request.method.toUpperCase() !== "GET" && request.headers.accept !== "application/json"){
         return {
             status: 303,

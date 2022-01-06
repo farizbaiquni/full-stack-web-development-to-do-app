@@ -15,6 +15,6 @@ export const del: RequestHandler<{}, FormData> = (request) => {
 export const patch: RequestHandler<{}, FormData> = (request) => {
     return api(request, {
         todo: request.body.get("todo"),
-        done: request.body.has("done") ? request.body.get("done") : undefined,
+        done: request.body.has("done") && request.body.get("done") == "true" ? true : false,
     })
 }

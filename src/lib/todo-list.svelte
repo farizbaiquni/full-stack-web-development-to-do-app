@@ -1,6 +1,6 @@
 <script type="ts">
   import { enhance } from "./actions/form";
-  export let updateTodoStatus;
+  export let updateTodo;
   export let deleteTodo;
   export let todo: Todo;
 </script>
@@ -9,18 +9,24 @@
   <form
     action="/todos/{todo.uid}.json?_method=patch"
     method="post"
-    use:enhance={{ result: updateTodoStatus }}
+    use:enhance={{ result: updateTodo }}
   >
-    <input type="hidden" name="done" value={todo.done ? "" : "true"} />
+    <input type="hidden" name="done" value={todo.done ? "false" : "true"} />
     <button
       aria-label="Mark as {todo.done ? 'not done' : 'done'}"
       class="toggle"
+      type="submit"
     >
       <i class="fa fa-2x fa-check" aria-hidden="true" />
     </button>
   </form>
 
-  <form action="/todos/{todo.uid}.json?_method=patch" method="post" id="text">
+  <form
+    action="/todos/{todo.uid}.json?_method=patch"
+    method="post"
+    id="text"
+    use:enhance={{ result: updateTodo }}
+  >
     <input type="text" value={todo.todo} name="todo" />
     <button aria-label="Save" class="save" type="submit">
       <i class="fa fa-2x fa-floppy-o" aria-hidden="true" />
